@@ -1,22 +1,29 @@
 const axios = require("axios");
 const { Op } = require("sequelize");
 
-const { Country } = require("../db");
-const { Activity } = require("../db");
+const { Country, Activity } = require("../db");
 
 const getAllCountries = async (req, res, next) => {
     
     const { name } = req.query;
     if (name) {
         try {
-            const namedCountry = await Country.findAll({
+            const namedCountries = await Country.findAll({
                 where: {
                     name: {
-                        [Op.iLike]: "%" + name + "%"
-                    }
-                }
-            });
-            res.json(namedCountry);
+                        [Op.iLike]: `%${name}%`
+                    }  
+                },
+                limit: 10,
+                offset: req.query.page,
+                attributes: {
+                    exclude: ['capital', 'region', 'area', 'createdAt', 'updatedAt']
+                    },
+                });
+            if (!namedCountries.length) {
+                res.status(404).json(`There is no country with "${name}" in it's name`)
+            }       
+            res.json(namedCountries);
         } catch (err) {
             next(err)
         } 
@@ -25,7 +32,7 @@ const getAllCountries = async (req, res, next) => {
         limit: 10,
         offset: req.query.page,
         attributes: {
-            exclude: ['id','capital', 'region', 'area', 'population', 'createdAt', 'updatedAt']
+            exclude: ['capital', 'region', 'area', 'createdAt', 'updatedAt']
             },
         /* order: [["name", req.query.order]] */
     });
@@ -41,8 +48,8 @@ const getAllCountries = async (req, res, next) => {
                     flag: country["flag"],
                     continent: country["region"],
                     capital: country["capital"],
-                    region: country["subregion"],
-                    area: country["area"],
+                    /* region: country["subregion"],
+                    area: country["area"], */
                     population: country["population"],
                 })
             );
@@ -51,7 +58,7 @@ const getAllCountries = async (req, res, next) => {
                 limit: 10,
                 offset: req.query.page,
                 attributes: {
-                    exclude: ['id','capital', 'region', 'area', 'population', 'createdAt', 'updatedAt']
+                    exclude: ['capital', 'region', 'area', 'createdAt', 'updatedAt']
                 },
                 /* order: [["name", req.query.order]] */
                 /* include: { model: Activity } */
@@ -77,7 +84,19 @@ const getCountryById = async (req, res, next) => {
     try {
         const { id } = req.params;
         const findCountry = await Country.findByPk(id, {include: Activity});
-        res.json(findCountry);
+       if (!findCountry.dataValues.region || !findCountry.dataValues.area) {
+            const countryDetails = await axios.get(`https://restcountries.eu/rest/v2/alpha/${id}`);
+            const countryUpdates = {
+                region: countryDetails.data["subregion"],
+                area: countryDetails.data["area"]
+            };
+            await Country.update(countryUpdates, { where: { id: id} });
+            const findCountry2 = await Country.findByPk(id, {include: Activity});
+            res.json(findCountry2);
+
+        } else {
+           res.json(findCountry); 
+        }
     } catch (err) {
         next(err)
     }
