@@ -1,5 +1,4 @@
-const { Activity } = require("../db");
-const { Country } = require("../db");
+const { Activity, Country } = require("../db");
 const { Op } = require("sequelize");
 
 const createActivity = async (req, res, next) => {
