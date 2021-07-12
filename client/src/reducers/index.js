@@ -1,4 +1,4 @@
-import { GET_MOVIES, GET_MOVIE_DETAIL, ADD_MOVIE_FAVORITE, REMOVE_MOVIE_FAVORITE, GET_COUNTRIES, GET_COUNTRIES_BY_NAME, GET_COUNTRY_DETAIL, ADD_ACTIVITY } from "../actions/types"
+import { GET_MOVIES, GET_MOVIE_DETAIL, ADD_MOVIE_FAVORITE, REMOVE_MOVIE_FAVORITE, GET_COUNTRIES, GET_COUNTRY_DETAIL, ADD_ACTIVITY } from "../actions/types"
 
 const initialState = { // El state inicial que recibira el reducer...
     moviesFavourites: [], // moviesFavourites es un array donde se guardarán las películas favoritas...
@@ -39,17 +39,12 @@ export default function rootReducer(state = initialState, action) { // El reduce
                 ...state,
                 countries: action.payload
             };
-            case GET_COUNTRIES_BY_NAME:
-                return {
-                    ...state,
-                    countries: action.payload
-                };
-
-                case GET_COUNTRY_DETAIL:
-                    return {
-                        ...state,
-                        countryDetails: action.payload
-                    };
+            
+        case GET_COUNTRY_DETAIL:
+            return {
+                ...state,
+                countryDetails: action.payload
+            };
         
         default: // Si no le paso ninguno de los casos anteriores...
             return state; // Retorna el state anterior (el introducido como parámetro).

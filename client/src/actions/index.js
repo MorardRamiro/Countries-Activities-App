@@ -1,4 +1,4 @@
-import { GET_MOVIES, GET_MOVIE_DETAIL, ADD_MOVIE_FAVORITE, REMOVE_MOVIE_FAVORITE, GET_COUNTRIES, GET_COUNTRIES_BY_NAME, GET_COUNTRY_DETAIL, ADD_ACTIVITY } from "./types";
+import { GET_MOVIES, GET_MOVIE_DETAIL, ADD_MOVIE_FAVORITE, REMOVE_MOVIE_FAVORITE, GET_COUNTRIES, GET_COUNTRY_DETAIL, ADD_ACTIVITY } from "./types";
 
 export function addMovieFavorite(payload) { // El action creator addMovieFavorite recibe un payload como parámetro... con la película que quiero agregar a mi lista de favoritos.
   return { // Retorna una action, es decir, un objeto con una propiedad OBLIGATORIA TYPE...
@@ -32,23 +32,13 @@ export function getMovieDetail(id) { // El action creator getMovieDetail recibe 
       };
     }
 
-export const getCountries = () => {
-  return (dispatch) => {
-    return fetch(`http://localhost:3001/countries`)
-    .then(response => response.json())
-    .then(obj => 
-      dispatch({ type: GET_COUNTRIES, payload: obj})
-      )
-  }
-};
-
-export const getCountriesByName = (name) => {
-  return (dispatch) => {
-    return fetch(`http://localhost:3001/countries?name=${name}`)
-    .then(response => response.json())
-    .then(obj => 
-      dispatch({ type: GET_COUNTRIES, payload: obj})
-      )
+export const getCountries = ( name ) => { //, order = "", orderBy = "", page
+  return ( dispatch ) => {
+    return fetch ( `http://localhost:3001/countries?name=${name}` ) //&order=${order}&orderBy=${orderBy}&page=${page}
+    .then( response => response.json())
+    .then( obj => 
+      dispatch ( { type: GET_COUNTRIES, payload: obj } )
+    )
   }
 };
 
