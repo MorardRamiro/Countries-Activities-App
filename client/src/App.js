@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 import NavBar from "./components/NavBar/NavBar";
 import Countries from "./components/Countries/Countries";
 import Country from "./components/Country/Country";
+import Activity from "./components/Activities/Activities"
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Route exact path="/" />
       <Route exact path="/main" component={Countries} />
       <Route path="/main/:id" component={Country} />
+      <Route path="/form" component={Activity} />
     </React.Fragment>
   );
 }
