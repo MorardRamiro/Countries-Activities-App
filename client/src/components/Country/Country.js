@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getCountryDetail } from '../../actions/index'; // Importo el action creator getMovieDetail...
+import { getCountryDetail } from '../../actions/index';
 
-// import './Movie.css'; // Importo los estilos.
 
 class Country extends Component {
 
-    componentDidMount() { // Cuando se  monte el componente, llama a getMovieDetail y muestra los datos
-        const countryId = this.props.match.params.id; // manera convencional... 
-        /* const { match: { params: { id }}} = this.props;*/ // usando destructuring
-        this.props.getCountryDetail(countryId) // Despacho la action getMovieDetail con el id de la pelicula como parámetro...
+    componentDidMount() { 
+        const countryId = this.props.match.params.id; 
+        this.props.getCountryDetail(countryId);
     }
 
     render() {
@@ -22,16 +20,18 @@ class Country extends Component {
                 <h4> Region: {this.props.country.region} </h4>
                 <h4> Area: {this.props.country.area} km² </h4>
                 <h4> Population: {this.props.country.population} </h4>
-                <h4> Activities: {this.props.country.activities} </h4>
+                <h4> Activities: {this.props.country.activities && this.props.country.activities.map(e => {
+                  return <div>
+                    <h4>Activity: {e.name}</h4>
+                    <h4>Difficulty: {e.difficulty}</h4>
+                    <h4>Duration: {e.duration} hs </h4>
+                    <h4>Season: {e.season}</h4>
+                  </div>
+                })} </h4>
             </div>
         );
     }
 }
-
-
-
-/* export default (Movie); */
-
 
 function mapStateToProps(state) {
     return {

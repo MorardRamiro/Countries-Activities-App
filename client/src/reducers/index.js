@@ -1,8 +1,10 @@
-import { GET_COUNTRIES, GET_COUNTRY_DETAIL, ADD_ACTIVITY } from "../actions/types"
+import { GET_COUNTRIES, GET_COUNTRY_DETAIL, GET_COUNTRIES_TO_SELECT, ADD_ACTIVITY } from "../actions/types"
 
 const initialState = {
   countries: [],
-  countryDetails: {}
+  countryDetails: {},
+  allCountries: []
+  /* newActivity: {} */
 };
 
 export default function rootReducer(state = initialState, action) {
@@ -18,6 +20,17 @@ export default function rootReducer(state = initialState, action) {
         ...state,
         countryDetails: action.payload
       };
+
+      case GET_COUNTRIES_TO_SELECT:
+        return {
+          ...state,
+          allCountries: action.payload
+        };
+    /* case ADD_ACTIVITY:
+      return {
+        ...state,
+        newActivity: action.payload
+      } */
 
     default:
       return state;

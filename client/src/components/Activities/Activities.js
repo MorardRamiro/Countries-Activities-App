@@ -1,30 +1,60 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+import { getCountriesToSelect } from '../../actions/index'
+import { addActivity } from "../../actions/index.js"
+
 export class Activity extends Component {
   constructor(props) {
     super(props);
     this.state = {
       input: {
         name: "",
-        difficulty: 0,
-        duration: "00:00",
+        difficulty: "",
+        duration: "",
         season: "",
-        countries: []
+        countries: [],
+        
       },
       errors: {
 
       }
     }
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleInputChange = (e) => {
-    this.setState({
-      ...this.state,
-      input:{ ...this.state.input, [e.target.name]: e.target.value}   
-    });
+  componentDidMount () {
+    this.props.getCountriesToSelect();
+  }
+
+  handleSubmit (e) {
+    e.preventDefault();
+    /* this.props.addActivity(this.state.input) */
+    fetch("http://localhost:3001/activities", {method: "POST", headers: {'Content-Type': 'application/JSON'}, body: JSON.stringify(this.state.input)})
+    .then(response => console.log(response))
+  }
+
+  handleInputChange (e) {
+    if (e.target.name !== "countries") {
+      this.setState({
+        ...this.state,
+        input: { ...this.state.input, [e.target.name]: e.target.value }
+      });
+    } else {
+      if (!this.state.input[e.target.name].includes(e.target.value)) {
+        this.setState({
+          ...this.state,
+          input: { ...this.state.input,
+            [e.target.name]: [ ...this.state.input[e.target.name], e.target.value] }
+        });
+      }
+      
+    }
+
   };
+
+  
 
   render() {
     return (
@@ -46,17 +76,29 @@ export class Activity extends Component {
           <input onClick={this.handleInputChange} type="radio" name="difficulty" value={5} /><a>5</a>
         </div>
         <div><label>DURATION:</label>
-        <input type = "time" name="duration" onChange={this.handleInputChange} /></div>
+          <input type="time" name="duration" onChange={this.handleInputChange} /></div>
         <div>
           <label>SEASON:</label>
-          <input type="text" name="season" list="seasons" autocomplete="off" onChange={this.handleInputChange} />
-            <datalist id="seasons">
-              <option value="Summer" />
-                <option value="Autumn" />
-                <option value="Winter" />
-                <option value="Spring" />
-            </datalist>
+          <select name="season" onChange={this.handleInputChange}>
+            <option value="Summer"> Summer </option>
+            <option value="Autumn"> Autumn </option>
+            <option value="Winter"> Winter </option>
+            <option value="Spring"> Spring </option>
+            </select>
         </div>
+        <div>
+          <label>COUNTRIES:</label>
+          <select name="countries" onChange={this.handleInputChange}>
+            {this.props.allCountries.count && this.props.allCountries.rows.map(country => {
+              return <option value={country.id}>{country.name}</option>
+            })}
+            {/* <option value="ARG"> Argentina </option>
+            <option value="URY"> Uruguay </option>
+            <option value="PAR"> Paraguay </option>
+            <option value="BOL"> Bolivia </option> */}
+            </select>
+        </div>
+        <button type="submit" id="post-btn" onClick={this.handleSubmit}> CREATE </button>
         {/* <div>
           <label>Password:</label>
           <input className={errors.password && 'danger'} type="password" name="password" onChange={handleInputChange} value={input.password} />
@@ -68,16 +110,32 @@ export class Activity extends Component {
   }
 
 }
+/* 
+const button = document.getElementById('post-btn');
+
+button.addEventListener('click', async () => {
+  try {     
+    const response = await fetch('http://localhost:3001/activities', {
+      method: 'post',
+      body: this.state.input
+      
+    });
+    console.log('Completed!', response);
+  } catch(err) {
+    console.error(`Error: ${err}`);
+  }
+}) */
 
 function mapStateToProps(state) {
   return {
-    
+    allCountries: state.allCountries
   };
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-   
+    getCountriesToSelect: () => dispatch(getCountriesToSelect())
+    /* addActivity: obj => dispatch(addActivity(obj)), */
   };
 }
 

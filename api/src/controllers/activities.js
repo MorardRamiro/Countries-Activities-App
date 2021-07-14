@@ -3,12 +3,12 @@ const { Op } = require("sequelize");
 
 const createActivity = async (req, res, next) => {
     try {
-        const { id, name, difficulty, duration, season, countries } = req.body;
+        const { name, difficulty, duration, season, countries } = req.body;
         /* if (!id || !name || !difficulty || !duration || !season || !countries) return res.send("NO"); */
         const createdActivity = await Activity.create({ 
-            id: id, 
+            
             name: name,
-            difficulty: difficulty, 
+            difficulty: Number(difficulty), 
             duration: duration, 
             season: season,
             countries: countries
