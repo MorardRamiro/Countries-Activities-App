@@ -28,6 +28,19 @@ const createActivity = async (req, res, next) => {
     }
 }
 
+const getAllActivities = async (req, res, next) => {
+  try {
+     allActivities = await Activity.findAll({
+       attributes: ["name"],
+       group: "name"
+     });
+     res.json(allActivities);
+  } catch (err) {
+    next(err)
+  }
+}
+
 module.exports = {
-    createActivity
+    createActivity,
+    getAllActivities
 }

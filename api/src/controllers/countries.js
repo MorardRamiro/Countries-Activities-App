@@ -14,6 +14,18 @@ const getCountriesToSelect = async (req, res, next) => {
   } catch (err) {
     next(err)
   }
+};
+
+const getAllContinents = async (req, res, next) => {
+  try {
+     allContinents = await Country.findAll({
+       attributes: ["continent"],
+       group: "continent"
+     });
+     res.json(allContinents);
+  } catch (err) {
+    next(err)
+  }
 }
 
 const getAllCountries = async (req, res, next) => {
@@ -36,29 +48,43 @@ const getAllCountries = async (req, res, next) => {
       orderBy = req.query.orderBy;
     };
 
-    const searchArray = {
+     let continent = {[Op.in]: ["Asia", "", "Oceania", "Africa", "Polar", "Europe", "Americas"]};
+    if (req.query.continent && typeof(req.query.continent) === "string") {
+      continent = req.query.continent;
+    };
+
+    let searchArray = {
       limit: 10,
       offset: page * 10,
       attributes: {
         exclude: ['capital', 'region', 'area', 'createdAt', 'updatedAt']
       },
+      where: {
+        continent: continent
+      }, 
       order: [[orderBy, order]],
       include: [Activity]
     };
 
+    if(req.query.activity) {
+      searchArray = {...searchArray, include: {model: Activity, where: {name: req.query.activity}}}
+    };
+
     if (name) {
       const namedCountries = await Country.findAndCountAll({
-        where: {
+        ...searchArray,
+        where: { ...searchArray.where,
           name: {
             [Op.iLike]: `%${name}%`
-          }
+
+          } ,
         },
-        ...searchArray
+        
       });
       if (!namedCountries.count) {
         res.json(`There is no country with "${name}" in it's name`)
       }
-      res.json(namedCountries);
+      return res.json(namedCountries);
     }
 
     const findCountries = await Country.findAndCountAll({
@@ -75,9 +101,9 @@ const getAllCountries = async (req, res, next) => {
           flag: country["flag"],
           continent: country["region"],
           capital: country["capital"],
-          /* region: country["subregion"],
-          area: country["area"], */
           population: country["population"],
+          /* region: country["subregion"],
+          area: country["area"], */     
         })
       );
       await Country.bulkCreate(countriesArray);
@@ -94,7 +120,13 @@ const getAllCountries = async (req, res, next) => {
 const getCountryById = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const findCountry = await Country.findByPk(id, { include: Activity });
+    const searchObj = {
+      include: Activity,
+      attributes: {
+        exclude: ['createdAt', 'updatedAt']
+      }
+    }
+    const findCountry = await Country.findByPk(id, searchObj);
     if (!findCountry.dataValues.region || !findCountry.dataValues.area) {
       const countryDetails = await axios.get(`https://restcountries.eu/rest/v2/alpha/${id}`);
       const countryUpdates = {
@@ -102,7 +134,7 @@ const getCountryById = async (req, res, next) => {
         area: countryDetails.data["area"]
       };
       await Country.update(countryUpdates, { where: { id: id } });
-      const findCountry2 = await Country.findByPk(id, { include: Activity });
+      const findCountry2 = await Country.findByPk(id, searchObj);
       res.json(findCountry2);
 
     } else {
@@ -112,18 +144,10 @@ const getCountryById = async (req, res, next) => {
     next(err)
   }
 }
-/* const countryApi = await axios.get(`https://restcountries.eu/rest/v2/all`);
-    const countryMine = await Country.findAll();
-    Promise.all([countryApi, countryMine])
-        .then(resp => {
-            let [countryApiRes, countryMineRes] = resp;
-            return res.send(
-                countryMineRes.concat(countryApiRes.data.results)
-            );
-        })
-        .catch(err => next(err)); */
+
 module.exports = {
   getAllCountries,
   getCountryById,
-  getCountriesToSelect
+  getCountriesToSelect,
+  getAllContinents
 }

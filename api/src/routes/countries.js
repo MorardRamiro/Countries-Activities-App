@@ -1,9 +1,10 @@
 const { Router } = require('express');
-const { getAllCountries, getCountryById, getCountriesToSelect } = require("../controllers/countries");
+const { getAllCountries, getCountryById, getCountriesToSelect, getAllContinents } = require("../controllers/countries");
 const router = Router();
 
 router.get("/", getAllCountries);
 router.get("/all", getCountriesToSelect);
+router.get("/continents", getAllContinents);
 router.get("/:id", getCountryById);
 
 
