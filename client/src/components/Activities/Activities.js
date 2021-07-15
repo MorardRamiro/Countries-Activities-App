@@ -92,10 +92,6 @@ export class Activity extends Component {
             {this.props.allCountries.count && this.props.allCountries.rows.map(country => {
               return <option value={country.id}>{country.name}</option>
             })}
-            {/* <option value="ARG"> Argentina </option>
-            <option value="URY"> Uruguay </option>
-            <option value="PAR"> Paraguay </option>
-            <option value="BOL"> Bolivia </option> */}
             </select>
         </div>
         <button type="submit" id="post-btn" onClick={this.handleSubmit}> CREATE </button>
