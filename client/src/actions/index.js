@@ -32,7 +32,7 @@ export const getCountriesToSelect = () => {
 
 export const addActivity = (object) => {
   return(dispatch) => { 
-    return fetch("http://localhost:3001/activities", {method: "post",  body: object})
+    return fetch("http://localhost:3001/activities", {method: "POST", headers: {'Content-Type': 'application/JSON'}, body: JSON.stringify(object)})
     .then(response => response.json())
     .then(obj =>
       dispatch({ type: ADD_ACTIVITY, payload: obj}))

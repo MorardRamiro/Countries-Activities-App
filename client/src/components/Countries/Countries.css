@@ -1,20 +1,21 @@
-/* Pagination links */
-.pagination a {
-    color: black;
-    float: left;
-    padding: 8px 16px;
-    text-decoration: none;
-    transition: background-color .3s;
-  }
-  
-/* Style the active/current link */
-.pagination a.active {
-    background-color: dodgerblue;
-    color: white;
+/* Style the buttons */
+.btn {
+  border: none;
+  outline: none;
+  padding: 10px 16px;
+  background-color: #f1f1f1;
+  cursor: pointer;
 }
 
-/* Add a grey background color on mouse-over */
-.pagination a:hover:not(.active) {background-color: #ddd;}
+/* Style the active class (and buttons on mouse-over) */
+.active, .btn:hover {
+  background-color: #666;
+  color: white;
+}
+
+.hide {
+  display: none;
+}
 
 img {
     border: 1px solid #ddd;

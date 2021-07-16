@@ -103,13 +103,13 @@ export class Countries extends Component {
         </div>
 
         <div className="pagination">
-        {<a><button disabled={this.state.page > 0 ? "" : "yes"} name="first" type="button" onClick={this.selectPage}> « </button></a>}
-          {<a><button disabled={this.state.page > 0 ? "" : "yes"} name="prev" type="button" onClick={this.selectPage}> ‹ </button></a>}
+        {<button class="btn" disabled={this.state.page > 0 ? "" : "yes"} name="first" type="button" onClick={this.selectPage}> « </button>}
+          {<button class="btn" disabled={this.state.page > 0 ? "" : "yes"} name="prev" type="button" onClick={this.selectPage}> ‹ </button>}
           {this.props.countries.count && Array(Math.ceil(this.props.countries.count / 10)).fill().map((x, e) => {
-            return <a class={this.state.page === e ? "active" : ""}><button onClick={this.selectPage} name="page" value={e}>{e+1}</button></a>
+            return <button class={this.state.page === e ? "btn active" : (this.state.page <= 4 && e >= 7) ? "hide" : (this.state.page>4 && (e< this.state.page - 3 || e> this.state.page + 3)) ? "hide" : "btn"} onClick={this.selectPage} name="page" value={e}>{e+1}</button>
           })}
-          {<a><button disabled={this.state.page < Math.ceil(this.props.countries.count / 10) - 1 ? "" : "yes"} name="next" type="button" onClick={this.selectPage}> › </button></a>}
-          {<a><button disabled={this.state.page < Math.ceil(this.props.countries.count / 10) - 1 ? "" : "yes"} name="last" type="button" onClick={this.selectPage}> » </button></a>}
+          {<button class="btn" disabled={this.state.page < Math.ceil(this.props.countries.count / 10) - 1 ? "" : "yes"} name="next" type="button" onClick={this.selectPage}> › </button>}
+          {<button class="btn" disabled={this.state.page < Math.ceil(this.props.countries.count / 10) - 1 ? "" : "yes"} name="last" type="button" onClick={this.selectPage}> » </button>}
         </div>
 
         <h2> Buscador </h2>
