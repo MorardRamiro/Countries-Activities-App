@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import Logo from '../../logoHenry.png'
+
 
 import './Navbar.css';
 
-export default function NavBar() {
-  return (
+export default class NavBar extends Component {
+  render () {
+    return (
     <header className="navbar">
-      <div>
-        <img id="logoHenry" src={Logo} width="30" height="30" className="d-inline-block align-top" alt="" />
-      </div>
+      <div></div>
       <nav>
         <ul className="list">
           <li className="list-item">
@@ -22,3 +21,5 @@ export default function NavBar() {
     </header>
   )
 }
+  }
+  

@@ -1,0 +1,45 @@
+ .map {
+  background-image: url(http://www.customwallpaper.net.au/wp-content/uploads/2016/10/Vintage-Map-of-the-World-1733.jpeg);
+  height: 100%;
+
+ 
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+
+  min-height: 100%;
+  min-width: 1024px;
+
+  width: 100%;
+  height: auto;
+
+  position: fixed;
+  top: 100;
+  left: 0; 
+
+}
+
+.elp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inside {
+  padding:50px;
+}
+
+.border {
+  border: 1px solid black;
+}
+
+body, html {
+  height: 100%;
+}
+
+div, button, input, select, option {
+  font-family: 'MedievalSharpBookOblique';
+  font-weight: bold;
+  font-style: italic;
+}

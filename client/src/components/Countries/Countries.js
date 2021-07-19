@@ -66,20 +66,76 @@ export class Countries extends Component {
   render() {
     const { name } = this.state;
     return (
-      <div>
+      <div class="map"> 
+        
+         <div className="column half">
+        <div className="space"><h1 className="whitebackground lessthanhalf"> Countries around the World... </h1></div>
+        <div className="search-box">
+            <input
+              className="input"
+              type="text"
+              id="name"
+              name="name"
+              autoComplete="off"
+              placeholder="Enter a name..."
+              value={name}
+              onChange={this.handleChange}
+            />
+            <button className="btn" name="name" onClick={this.handleChange} value=""> RESET </button>  
+          </div>
+        <div className="pagination">
+        {<button class="btn" disabled={this.state.page > 0 ? "" : "yes"} name="first" type="button" onClick={this.selectPage}> « </button>}
+          {<button class="btn" disabled={this.state.page > 0 ? "" : "yes"} name="prev" type="button" onClick={this.selectPage}> ‹ </button>}
+          {this.props.countries.count && Array(Math.ceil(this.props.countries.count / 10)).fill().map((x, e) => {
+            return <button className={this.state.page === e ? "btn active" : (this.state.page <= 4 && e >= 7) ? "hide" : (this.state.page>4 && (e< this.state.page - 3 || e> this.state.page + 3)) ? "hide" : "btn"} onClick={this.selectPage} name="page" value={e}>{e+1}</button>
+          })}
+          {<button class="btn" disabled={this.state.page < Math.ceil(this.props.countries.count / 10) - 1 ? "" : "yes"} name="next" type="button" onClick={this.selectPage}> › </button>}
+          {<button class="btn" disabled={this.state.page < Math.ceil(this.props.countries.count / 10) - 1 ? "" : "yes"} name="last" type="button" onClick={this.selectPage}> » </button>}
+        </div>
+        <ul>
+          {this.props.countries.count && this.props.countries.rows.map((e) => {
+            return <li key={e.id}>
+              <Link to={`/main/${e.id}`}><img src={e.flag}>
+                </img>
+                </Link>
+                <div className="whitebackground">
+              <div>
+                <Link to={`/main/${e.id}`}>
+                {e.name}
+              </Link>
+              </div>
+              <div>{e.continent}</div>
+            </div></li>
+          })}
+        </ul>
+</div>
+<div className="column last">
+        <form className="form-container whitebackground">
+        <div className="input">
+          <h2>Order by</h2>
+          <div>Name/alphabetically: <input onClick={this.handleChange} class="checkbox" name="orderBy" type="radio" value="name" defaultChecked /></div>
+          <div>Population size: <input onClick={this.handleChange} class="checkbox" name="orderBy" type="radio" value="population" /></div>
+        </div>
+
+        <div className="input">
+          <h2>Order</h2>
+         <div> Ascending: <input onClick={this.handleChange} class="checkbox" name="order" type="radio" value="ASC" defaultChecked /></div>
+         <div> Descending: <input onClick={this.handleChange} class="checkbox" name="order" type="radio" value="DESC" /></div>
+        </div>
         <div>
-          <h2>FILTER BY ACTIVITIES</h2>
-          <form><select name="activity" onChange={this.handleChange}>
-          <option disabled selected hidden value> -- select an activity -- </option>
+          <h2>Filter by an activity</h2>
+          <form>
+            <select className="btn" name="activity" onChange={this.handleChange}>
+          <option disabled selected hidden value> -- Select an activity -- </option>
           <option name="activity" value=""> Any </option>
             {this.props.allActivities && this.props.allActivities.map(e => <option name="activity" value={e.name}>{e.name}</option>)}
           </select>
-          <button type="reset" name="activity" onClick={this.handleChange} value=""> RESET </button></form>  
+          <button className="btn" type="reset" name="activity" onClick={this.handleChange} value=""> RESET </button></form>  
         </div>
         <div>
-          <h2>FILTER BY CONTINENT</h2><form>
-          <select name="continent" onChange={this.handleChange}>
-          <option disabled selected hidden value> -- select a continent -- </option>
+          <h2>Filter by continent</h2><form>
+          <select className="btn" name="continent" onChange={this.handleChange}>
+          <option disabled selected hidden value> -- Select a continent -- </option>
           <option name="continent" value=""> All </option>
           <option name="continent" value="Africa">Africa</option>
           <option name="continent" value="Americas">Americas</option>
@@ -88,58 +144,11 @@ export class Countries extends Component {
           <option name="continent" value="Oceania">Oceania</option>
           <option name="continent" value="Polar">Polar</option>
             </select>  
-            <button type="reset" name="continent" onClick={this.handleChange} value=""> ALL </button></form>        
+            <button className="btn" type="reset" name="continent" onClick={this.handleChange} value=""> ALL </button></form>        
         </div>
-        <div>
-          <h2>ORDER BY</h2>
-          NAME: <input onClick={this.handleChange} id="name" class="checkbox" name="orderBy" type="radio" value="name" defaultChecked />
-          POPULATION: <input onClick={this.handleChange} id="pop" class="checkbox" name="orderBy" type="radio" value="population" />
-        </div>
-
-        <div>
-          <h2>ORDER</h2>
-          ASC: <input onClick={this.handleChange} id="asc"  class="checkbox" name="order" type="radio" value="ASC" defaultChecked />
-          DESC: <input onClick={this.handleChange} id="desc"  class="checkbox" name="order" type="radio" value="DESC" />
-        </div>
-
-        <div className="pagination">
-        {<button class="btn" disabled={this.state.page > 0 ? "" : "yes"} name="first" type="button" onClick={this.selectPage}> « </button>}
-          {<button class="btn" disabled={this.state.page > 0 ? "" : "yes"} name="prev" type="button" onClick={this.selectPage}> ‹ </button>}
-          {this.props.countries.count && Array(Math.ceil(this.props.countries.count / 10)).fill().map((x, e) => {
-            return <button class={this.state.page === e ? "btn active" : (this.state.page <= 4 && e >= 7) ? "hide" : (this.state.page>4 && (e< this.state.page - 3 || e> this.state.page + 3)) ? "hide" : "btn"} onClick={this.selectPage} name="page" value={e}>{e+1}</button>
-          })}
-          {<button class="btn" disabled={this.state.page < Math.ceil(this.props.countries.count / 10) - 1 ? "" : "yes"} name="next" type="button" onClick={this.selectPage}> › </button>}
-          {<button class="btn" disabled={this.state.page < Math.ceil(this.props.countries.count / 10) - 1 ? "" : "yes"} name="last" type="button" onClick={this.selectPage}> » </button>}
-        </div>
-
-        <h2> Buscador </h2>
-        <form className="form-container" onSubmit={this.handleSubmit}>
-          <div>
-            <label className="label"> Name: </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              autoComplete="off"
-              value={name}
-              onChange={this.handleChange}
-            />
-            <button name="name" onClick={this.handleChange} value=""> RESET </button>  
-          </div>
+        
         </form>
-        <h2> Countries </h2>
-        <ul>
-          {this.props.countries.count && this.props.countries.rows.map((e) => {
-            return <li key={e.id}>
-              <img src={e.flag}></img>
-              <Link to={`/main/${e.id}`}>
-                {e.name}
-              </Link>
-              {e.continent}
-            </li>
-          })}
-        </ul>
-
+</div>
 
       </div>
     );

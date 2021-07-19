@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 
 import { addActivity, getCountriesToSelect } from '../../actions/index'
 
+import './Activities.css';
+
 export class Activity extends Component {
   constructor(props) {
     super(props);
@@ -81,57 +83,72 @@ export class Activity extends Component {
 
   render() {
     return (
-      <form>
-        <div>
-          <label>NAME:</label>
-          <input  /* className={this.state.errors.name && 'danger'}  */
-            type="text" name="name" onChange={this.handleInputChange} value={this.state.input["name"]} />
-          {this.state.errors.name && (
-            <p /* className="danger" */>{this.state.errors.name}</p>
-          )}
+      <div className="map">
+        <div className="elper"> <h1 className="whitebackground muchless">Create a new activity</h1></div>
+        <div className="elper">
+          <div className="columns halfs whitebackground">
+
+            <div className="input">
+              <h2>Name of the activity:</h2>
+              <input placeholder="Enter a name..." className={this.state.errors.name ? 'danger' : "input"}
+                type="text" name="name" onChange={this.handleInputChange} value={this.state.input["name"]} />
+              {this.state.errors.name && (
+                <p className="danger">{this.state.errors.name}</p>
+              )}
+            </div>
+            <div className="input">
+              <h2>Difficulty:</h2>
+              <input onClick={this.handleInputChange} type="radio" name="difficulty" value={1} /><a>1</a>
+              <input onClick={this.handleInputChange} type="radio" name="difficulty" value={2} /><a>2</a>
+              <input onClick={this.handleInputChange} type="radio" name="difficulty" value={3} /><a>3</a>
+              <input onClick={this.handleInputChange} type="radio" name="difficulty" value={4} /><a>4</a>
+              <input onClick={this.handleInputChange} type="radio" name="difficulty" value={5} /><a>5</a>
+              {this.state.errors.difficulty && (
+                <p className="danger">{this.state.errors.difficulty}</p>)}
+            </div>
+            <div className="input">
+              <h2>Duration:</h2>
+              <input type="time" name="duration" onChange={this.handleInputChange} />
+              {this.state.errors.duration && (
+                <p className="danger">{this.state.errors.duration}</p>)}
+            </div>
+            
+          </div>
+          <div className="columns lasts whitebackground">
+            <div className="input">
+              <h2>Season in which it can take place:</h2>
+              <select className="input" name="season" onChange={this.handleInputChange}>
+                <option disabled selected hidden value> -- Select a season -- </option>
+                <option value="Summer"> Summer </option>
+                <option value="Autumn"> Autumn </option>
+                <option value="Winter"> Winter </option>
+                <option value="Spring"> Spring </option>
+              </select>
+              {this.state.errors.season && (
+                <p className="danger">{this.state.errors.season}</p>)}
+            </div>
+            <div className="input">
+              <h2>Countries in which this activity is available:</h2>
+              <select className="input" name="countries" onChange={this.handleInputChange}>
+                <option disabled selected hidden value> -- Select countries -- </option>
+                {this.props.allCountries.count && this.props.allCountries.rows.map(country => {
+                  return <option value={country.id}>{country.name}</option>
+                })}
+              </select>
+              {this.state.errors.countries && (
+                <p className="danger">{this.state.errors.countries}</p>)}
+              
+            </div>
+            <div className="input"><button className="btn" type="submit" id="post-btn" onClick={Object.keys(validate(this.state.input)).length ? this.validateAll : this.handleSubmit}> <h2>CREATE</h2> </button></div>
+          </div>
+          <div className="whitebackground">
+            <h2>Selected countries:</h2>
+            <ul className="list">
+                {this.state.input.countries && this.state.input.countries.map(e => <li className="list" value={e}><button className="btn" value={e} onClick={this.deleteCountry}> X </button>{this.props.allCountries.rows.find(elem => elem.id === e).name}</li>)}
+              </ul>
+          </div>
         </div>
-        <div>
-          <label>DIFFICULTY:</label>
-          <input onClick={this.handleInputChange} type="radio" name="difficulty" value={1} /><a>1</a>
-          <input onClick={this.handleInputChange} type="radio" name="difficulty" value={2} /><a>2</a>
-          <input onClick={this.handleInputChange} type="radio" name="difficulty" value={3} /><a>3</a>
-          <input onClick={this.handleInputChange} type="radio" name="difficulty" value={4} /><a>4</a>
-          <input onClick={this.handleInputChange} type="radio" name="difficulty" value={5} /><a>5</a>
-          {this.state.errors.difficulty && (
-            <p /* className="danger" */>{this.state.errors.difficulty}</p>)}
-        </div>
-        <div><label>DURATION:</label>
-          <input type="time" name="duration" onChange={this.handleInputChange} /></div>
-          {this.state.errors.duration && (
-            <p /* className="danger" */>{this.state.errors.duration}</p>)}
-        <div>
-          <label>SEASON:</label>
-          <select name="season" onChange={this.handleInputChange}>
-            <option disabled selected hidden value> -- select a season -- </option>
-            <option value="Summer"> Summer </option>
-            <option value="Autumn"> Autumn </option>
-            <option value="Winter"> Winter </option>
-            <option value="Spring"> Spring </option>
-          </select>
-          {this.state.errors.season && (
-            <p /* className="danger" */>{this.state.errors.season}</p>)}
-        </div>
-        <div>
-          <label>COUNTRIES:</label>
-          <select name="countries" onChange={this.handleInputChange}>
-            <option disabled selected hidden value> -- select the countries -- </option>
-            {this.props.allCountries.count && this.props.allCountries.rows.map(country => {
-              return <option value={country.id}>{country.name}</option>
-            })}
-          </select>
-          {this.state.errors.countries && (
-            <p /* className="danger" */>{this.state.errors.countries}</p>)}
-          <ul>
-            {this.state.input.countries && this.state.input.countries.map(e => <li value={e}>{this.props.allCountries.rows.find(elem => elem.id === e).name}<button value={e} onClick={this.deleteCountry}> X </button></li>)}
-          </ul>
-        </div>
-        <button type="submit" id="post-btn" onClick={ Object.keys(validate(this.state.input)).length ?  this.validateAll  : this.handleSubmit }> CREATE </button>
-      </form>)
+      </div>)
   }
 
 }

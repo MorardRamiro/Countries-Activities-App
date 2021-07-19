@@ -1,0 +1,39 @@
+.input {
+  /* border: none; */
+  outline: none;
+  padding: 10px 16px;
+}
+
+.danger {
+  outline: none;
+  padding: 10px 16px;
+  color: red;
+  border-color: red;
+}
+
+.list {
+width: unset;
+height: unset;
+margin-top: unset;
+margin-right: unset;
+display: table-row;
+text-align: unset;
+padding: 10px;
+}
+
+.columns { float: left; }
+.halfs { width: 20%; }
+.lasts { float: inline-end; width: auto; padding: 0px;}
+
+.elper {
+ display:flex;
+ justify-content:space-around;
+ align-self: center;
+ padding: 50px;
+}
+
+.muchless {
+  width: 20%;
+  display: flex;
+  align-self: center;
+}

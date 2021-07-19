@@ -1,6 +1,6 @@
 /* Style the buttons */
 .btn {
-  border: none;
+  /* border: none; */
   outline: none;
   padding: 10px 16px;
   background-color: #f1f1f1;
@@ -18,12 +18,64 @@
 }
 
 img {
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    /* border: 1px solid #ddd;
+    border-radius: 4px; */
     padding: 5px;
     width: 150px;
+    height: 100px;
 }
 
 img:hover {
     box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+.input {
+  /* border: none; */
+  outline: none;
+  padding: 10px 16px;
+}
+
+ul {
+  width: 1200px;
+}
+
+li {
+width: 200px;
+height: 200px;
+margin-top: 10px;
+margin-right: 10px;
+display: inline-block;
+text-align: center;
+}
+
+.pagination {
+  width: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-box {
+  width: 1200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+}
+
+.column { float: left; }
+.half { width: 50%; }
+.last { float: right; width: auto; padding: 120px;}
+
+.lessthanhalf {width: 50%;}
+
+.whitebackground {
+  /* background-color: beige; */
+  background-image: url(https://wallpaperaccess.com/full/1302755.jpg);
+  padding: 10px;
+  border: 1px solid;
+}
+
+.space {
+  padding-left: 30px;
 }
