@@ -18,5 +18,25 @@ describe('Country model', () => {
         Country.create({ name: 'Argentina' });
       });
     });
+    describe('flag', () => {
+      it('should throw an error if flag is null', (done) => {
+        Country.create({})
+          .then(() => done(new Error('It requires a valid flag')))
+          .catch(() => done());
+      });
+      it('should work when its a valid flag', () => {
+        Country.create({ flag: 'https://restcountries.eu/data/arg.svg' });
+      });
+    });
+    describe('continent', () => {
+      it('should throw an error if continent is null', (done) => {
+        Country.create({})
+          .then(() => done(new Error('It requires a valid continent')))
+          .catch(() => done());
+      });
+      it('should work when its a valid continent', () => {
+        Country.create({ continent: 1 });
+      });
+    });
   });
 });

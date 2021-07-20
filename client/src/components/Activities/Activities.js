@@ -27,7 +27,7 @@ export class Activity extends Component {
   };
 
   validateAll (e) {
-    e.preventDefault();
+    e && e.preventDefault();
     this.setState({
       ...this.state,
       errors: validate(this.state.input)
@@ -44,11 +44,13 @@ export class Activity extends Component {
   } */
 
   componentDidMount() {
-    this.props.getCountriesToSelect();
+    this.props.getCountriesToSelect && this.props.getCountriesToSelect();
   };
 
   handleSubmit() {
     this.props.addActivity(this.state.input);
+    alert("Your activity was created succesfully!");
+    window.location.reload();
   };
 
   handleInputChange(e) {
@@ -98,11 +100,11 @@ export class Activity extends Component {
             </div>
             <div className="input">
               <h2>Difficulty:</h2>
-              <input onClick={this.handleInputChange} type="radio" name="difficulty" value={1} /><a>1</a>
-              <input onClick={this.handleInputChange} type="radio" name="difficulty" value={2} /><a>2</a>
-              <input onClick={this.handleInputChange} type="radio" name="difficulty" value={3} /><a>3</a>
-              <input onClick={this.handleInputChange} type="radio" name="difficulty" value={4} /><a>4</a>
-              <input onClick={this.handleInputChange} type="radio" name="difficulty" value={5} /><a>5</a>
+              <input onClick={this.handleInputChange} type="radio" name="difficulty" value={1} /><label>1</label>
+              <input onClick={this.handleInputChange} type="radio" name="difficulty" value={2} /><label>2</label>
+              <input onClick={this.handleInputChange} type="radio" name="difficulty" value={3} /><label>3</label>
+              <input onClick={this.handleInputChange} type="radio" name="difficulty" value={4} /><label>4</label>
+              <input onClick={this.handleInputChange} type="radio" name="difficulty" value={5} /><label>5</label>
               {this.state.errors.difficulty && (
                 <p className="danger">{this.state.errors.difficulty}</p>)}
             </div>
@@ -117,47 +119,50 @@ export class Activity extends Component {
           <div className="columns lasts whitebackground">
             <div className="input">
               <h2>Season in which it can take place:</h2>
-              <select className="input" name="season" onChange={this.handleInputChange}>
-                <option disabled selected hidden value> -- Select a season -- </option>
-                <option value="Summer"> Summer </option>
-                <option value="Autumn"> Autumn </option>
-                <option value="Winter"> Winter </option>
-                <option value="Spring"> Spring </option>
+              <select defaultValue="default" className="input" name="season" onChange={this.handleInputChange}>
+                <option key="default" disabled hidden value="default"> -- Select a season -- </option>
+                <option key="Summer" value="Summer"> Summer </option>
+                <option key="Autumn" value="Autumn"> Autumn </option>
+                <option key="Winter" value="Winter"> Winter </option>
+                <option key="Spring" value="Spring"> Spring </option>
               </select>
               {this.state.errors.season && (
                 <p className="danger">{this.state.errors.season}</p>)}
             </div>
             <div className="input">
               <h2>Countries in which this activity is available:</h2>
-              <select className="input" name="countries" onChange={this.handleInputChange}>
-                <option disabled selected hidden value> -- Select countries -- </option>
-                {this.props.allCountries.count && this.props.allCountries.rows.map(country => {
-                  return <option value={country.id}>{country.name}</option>
+              <select defaultValue="default" className="input" name="countries" onChange={this.handleInputChange}>
+                <option key="default" disabled hidden value="default"> -- Select countries -- </option>
+                {this.props.allCountries && this.props.allCountries.count && this.props.allCountries.rows.map(country => {
+                  return <option key={country.id} value={country.id}>{country.name}</option>
                 })}
               </select>
               {this.state.errors.countries && (
                 <p className="danger">{this.state.errors.countries}</p>)}
-              
+              <div className="create"><button className="btn" type="submit" id="post-btn" onClick={Object.keys(validate(this.state.input)).length ? this.validateAll : this.handleSubmit}> <h2>CREATE</h2> </button></div>
+
             </div>
-            <div className="input"><button className="btn" type="submit" id="post-btn" onClick={Object.keys(validate(this.state.input)).length ? this.validateAll : this.handleSubmit}> <h2>CREATE</h2> </button></div>
-          </div>
-          <div className="whitebackground">
+                      </div>
+          <div className="countries whitebackground">
             <h2>Selected countries:</h2>
             <ul className="list">
-                {this.state.input.countries && this.state.input.countries.map(e => <li className="list" value={e}><button className="btn" value={e} onClick={this.deleteCountry}> X </button>{this.props.allCountries.rows.find(elem => elem.id === e).name}</li>)}
+                {(this.state.input.countries && this.state.input.countries.length) ? this.state.input.countries.map(e => <li key={e} className="list" value={e}><button className="btn" value={e} onClick={this.deleteCountry}> X </button>{this.props.allCountries.rows.find(elem => elem.id === e).name}</li>) : <p key="NO">You have not selected any countries yet...</p>}
               </ul>
           </div>
         </div>
+        
+        
+        
       </div>)
   }
 
 }
 
-function validate(input) {
+export function validate(input) {
   let errors = {};
   if (!input.name || input.name === "") {
     errors.name = 'A name is required';
-  } else if (!/^[A-Za-z]+((\s)?((\'|\-|\.)?([A-Za-z])+))*$/.test(input.name)) {
+  } else if (!/^[A-Za-z]+((\s)?(('|-|\.)?([A-Za-z])+))*$/.test(input.name)) {
     errors.name = 'Name is invalid';
   }
   if (!input.difficulty) {
@@ -169,7 +174,7 @@ function validate(input) {
   if (!input.season) {
     errors.season = "A season must be selected";
   }
-  if (!input.countries.length) {
+  if (!input.countries || !input.countries.length) {
     errors.countries = "At least one country must be selected";
   }
 

@@ -15,7 +15,7 @@ class Country extends Component {
         return (<div className="nice map flag">
             <div className="country-detail whitebackground">
                 <div className="flag"><h1> {this.props.country.name} ({this.props.country.id}) </h1>
-                <img src={this.props.country.flag} /></div>
+                <img alt="" src={this.props.country.flag} /></div>
                 <p>{this.props.country.name} (ISO 3166-1 alpha-3 code: {this.props.country.id}) is a country on the continent of {this.props.country.continent}, located in the sub-region of {this.props.country.region}. It's capital is {this.props.country.capital}. It has an estimated population of {this.props.country.population} inhabitants, spread across an area of {this.props.country.area}  km².</p>
                 {/* <h4> Continent: {this.props.country.continent} </h4>
                 <h4> Capital: {this.props.country.capital} </h4>

@@ -23,7 +23,6 @@ module.exports = (sequelize) => {
     },
     capital: {
       type: DataTypes.STRING,
-      allowNull: false,
     },
     region: {
       type: DataTypes.STRING,

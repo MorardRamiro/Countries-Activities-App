@@ -5,7 +5,7 @@
 }
 
 .danger {
-  outline: none;
+  /* outline: none; */
   padding: 10px 16px;
   color: red;
   border-color: red;
@@ -29,11 +29,23 @@ padding: 10px;
  display:flex;
  justify-content:space-around;
  align-self: center;
- padding: 50px;
+ /* padding-left: 50px; */
 }
 
 .muchless {
   width: 20%;
   display: flex;
   align-self: center;
+}
+
+.countries {
+  width: 25%
+}
+
+ .create {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 10px;
+  padding-left: 60px;
+  width: 70%;
 }

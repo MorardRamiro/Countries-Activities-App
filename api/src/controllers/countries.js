@@ -100,9 +100,9 @@ const getAllCountries = async (req, res, next) => {
           name: country["name"],
           flag: country["flag"],
           continent: country["region"],
-          capital: country["capital"],
           population: country["population"],
-          /* region: country["subregion"],
+          /* capital: country["capital"],
+          region: country["subregion"],
           area: country["area"], */     
         })
       );
@@ -127,11 +127,12 @@ const getCountryById = async (req, res, next) => {
       }
     }
     const findCountry = await Country.findByPk(id, searchObj);
-    if (!findCountry.dataValues.region || !findCountry.dataValues.area) {
+    if (!findCountry.dataValues.region || !findCountry.dataValues.area || !findCountry.dataValues.capital) {
       const countryDetails = await axios.get(`https://restcountries.eu/rest/v2/alpha/${id}`);
       const countryUpdates = {
         region: countryDetails.data["subregion"],
-        area: countryDetails.data["area"]
+        area: countryDetails.data["area"],
+        capital: countryDetails.data["capital"],
       };
       await Country.update(countryUpdates, { where: { id: id } });
       const findCountry2 = await Country.findByPk(id, searchObj);

@@ -12,8 +12,8 @@ export default class NavBar extends Component {
       <nav>
         <ul className="list">
           <li className="list-item">
-            <NavLink exact to="/" >Home</NavLink>
-            <NavLink to="/main" > Main </NavLink>
+            {/* <NavLink exact to="/">Home</NavLink> */}
+            <NavLink to="/home" > Home </NavLink>
             <NavLink to="/form" > Form </NavLink>
           </li>
         </ul>
