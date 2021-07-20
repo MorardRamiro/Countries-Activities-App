@@ -35,7 +35,7 @@ describe('Country model', () => {
           .catch(() => done());
       });
       it('should work when its a valid continent', () => {
-        Country.create({ continent: 1 });
+        Country.create({ continent: 'Americas' });
       });
     });
   });
