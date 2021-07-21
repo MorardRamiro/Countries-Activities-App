@@ -82,7 +82,7 @@ const getAllCountries = async (req, res, next) => {
         
       });
       if (!namedCountries.count) {
-        res.json(`There is no country with "${name}" in it's name`)
+        res.json({error: `There is no country with that name`})
       }
       return res.json(namedCountries);
     }

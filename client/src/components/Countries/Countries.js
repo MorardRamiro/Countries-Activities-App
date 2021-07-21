@@ -81,7 +81,7 @@ export class Countries extends Component {
               value={name}
               onChange={this.handleChange}
             />
-            <button className="btn" name="name" onClick={this.handleChange} value=""> RESET </button>  
+            <button className="btn" autoComplete="off" name="name" onClick={this.handleChange} value=""> RESET </button>  
           </div>
         <div className="pagination">
         {<button className="btn" disabled={this.state.page > 0 ? "" : "yes"} name="first" type="button" onClick={this.selectPage}> « </button>}
@@ -93,7 +93,7 @@ export class Countries extends Component {
           {<button className="btn" disabled={this.state.page < Math.ceil(this.props.countries.count / 10) - 1 ? "" : "yes"} name="last" type="button" onClick={this.selectPage}> » </button>}
         </div>
         <ul>
-          {this.props.countries.count && this.props.countries.rows.map((e) => {
+          {this.props.countries && this.props.countries.count ? this.props.countries.rows.map((e) => {
             return <li key={e.id}>
               <Link to={`/home/${e.id}`}><img alt="" src={e.flag}>
                 </img>
@@ -106,7 +106,7 @@ export class Countries extends Component {
               </div>
               <div>{e.continent}</div>
             </div></li>
-          })}
+          }) : <p key="none" className="whitebackground lessthanhalf">{this.props.countries.error}</p>}
         </ul>
 </div>
 <div className="column last">

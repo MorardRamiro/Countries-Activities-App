@@ -92,7 +92,7 @@ export class Activity extends Component {
 
             <div className="input">
               <h2>Name of the activity:</h2>
-              <input autocomplete="off" placeholder="Enter a name..." className={this.state.errors.name ? 'danger' : "input"}
+              <input autoComplete="off" placeholder="Enter a name..." className={this.state.errors.name ? 'danger' : "input"}
                 type="text" name="name" onChange={this.handleInputChange} value={this.state.input["name"]} />
               {this.state.errors.name && (
                 <p className="danger">{this.state.errors.name}</p>
