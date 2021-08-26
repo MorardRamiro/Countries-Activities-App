@@ -1,4 +1,4 @@
-Henry Food
+Henry Countries App
 My individual project for Henry‘s Bootcamp.
 
 Built With
