@@ -32,3 +32,6 @@ In the project directory, you can run: npm start
 
 Runs the app in the development mode.
 Open <a href="http://localhost:3000">http://localhost:3000</a> to view it in the browser. The page will reload if you make edits.
+
+<img alt="" src="https://user-images.githubusercontent.com/81689589/130886444-385ad459-1787-4eaa-a5aa-d99b20fb876f.png">
+<img alt="" src="https://user-images.githubusercontent.com/81689589/130886604-a1abfe23-6efa-4d9a-9601-3f3c7fe6c423.png">
