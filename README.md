@@ -1,5 +1,6 @@
 <h1> Henry Countries App </h1>
 My individual project for <a href="https://www.soyhenry.com/">Henry‘s Bootcamp</a>.
+
 <ul>
 <li>Built With</li>
 <li>React.js</li>
