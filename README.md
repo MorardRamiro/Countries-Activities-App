@@ -1,15 +1,16 @@
 <h1> Henry Countries App </h1>
-My individual project for Henry‘s Bootcamp.
-
-Built With
-React.js
-Redux
-Node.js
-Styled-Components
-PostreSQL
-Sequelize
-Express.js
-Features
+My individual project for <a href="https://www.soyhenry.com/">Henry‘s Bootcamp</a>.
+<ul>
+<li>Built With</li>
+<li>React.js</li>
+<li>Redux</li>
+<li>Node.js</li>
+<li>Styled-Components</li>
+<li>PostreSQL</li>
+<li>Sequelize</li>
+<li>Express.js</li>
+  </ul>
+<h2>Features</h2>
 📖 Multi-Page Layout
 
 🎨 Styled with Styled-Components and Css
@@ -23,10 +24,10 @@ Features
 📝 Controlled Form to submit your own recipe!
 
 
-🛠 Installation and Setup Instructions
+<h2>🛠 Installation and Setup Instructions</h2>
 Installation: npm install
 
 In the project directory, you can run: npm start
 
 Runs the app in the development mode.
-Open http://localhost:3000 to view it in the browser. The page will reload if you make edits.
+Open <a href="http://localhost:3000">http://localhost:3000</a> to view it in the browser. The page will reload if you make edits.
